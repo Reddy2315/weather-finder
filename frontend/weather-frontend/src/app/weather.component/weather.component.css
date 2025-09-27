@@ -1,0 +1,67 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+}
+
+.weather-card {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-weight: normal;
+    background: linear-gradient(to right, #22ffd3da, #65a1f5d0);
+}
+
+mat-card-title {
+    font-size: 2em;
+    color: #001a79;
+}
+
+input {
+    margin-left: 10px;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.city-input {
+    flex: 1;
+}
+
+button{
+    margin-top: 7px;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.error {
+    color: #d32f2f;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.result-card {
+    margin-top: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.888);
+}
+
+.result-card p {
+    font-size: 1.1em;
+    margin: 5px 0;
+}

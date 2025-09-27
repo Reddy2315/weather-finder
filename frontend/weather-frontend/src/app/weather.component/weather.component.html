@@ -1,0 +1,46 @@
+<div class="container">
+  <mat-card class="weather-card">
+    <mat-card-header>
+      <mat-card-title>Weather Finder</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Search Box -->
+      <div class="search-box">
+        <mat-form-field appearance="outline" class="city-input">
+          <mat-label>City</mat-label>
+          <input matInput [(ngModel)]="city" placeholder="Enter city (e.g. Hyderabad)" (keyup.enter)="search()"/>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="search()">Search</button>
+      </div>
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="loading">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="error" class="error">
+        <mat-icon>error</mat-icon> {{ error }}
+      </div>
+
+      <!-- Weather Result -->
+      <div *ngIf="data" class="result">
+        <mat-card class="result-card">
+          <mat-card-header>
+            <mat-card-title>{{ data.name }}</mat-card-title>
+            <mat-card-subtitle>
+                {{ getWeatherEmoji(data.weather[0].main) }} {{ data.weather[0].main }} — {{ getWeatherDescriptionWithEmoji(data.weather[0].main, data.weather[0].description) }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p><strong>Temp:</strong> {{ data.main?.temp }} °C</p>
+            <p><strong>Feels like:</strong> {{ data.main?.feels_like }} °C</p>
+            <p><strong>Humidity:</strong> {{ data.main?.humidity }}%</p>
+            <p><strong>Wind:</strong> {{ data.wind?.speed }} m/s</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
