@@ -1,46 +1,72 @@
-<div class="container">
-  <mat-card class="weather-card">
-    <mat-card-header>
-      <mat-card-title>Weather Finder</mat-card-title>
-    </mat-card-header>
+<mat-card class="weather-card" [ngClass]="isDay ? 'day' : 'night'">
 
-    <mat-card-content>
-      <!-- Search Box -->
-      <div class="search-box">
-        <mat-form-field appearance="outline" class="city-input">
-          <mat-label>City</mat-label>
-          <input matInput [(ngModel)]="city" placeholder="Enter city (e.g. Hyderabad)" (keyup.enter)="search()"/>
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="search()">Search</button>
-      </div>
+  <mat-card-header>
+    <mat-card-title>{{ displayCity }}</mat-card-title>
+  </mat-card-header>
 
-      <!-- Loading -->
-      <div *ngIf="loading" class="loading">
-        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-      </div>
+  <mat-card-content>
+    <!-- Search Box -->
+    <div class="search-box">
+      <mat-form-field appearance="outline" class="city-input">
+        <mat-label>Search City</mat-label>
+        <input matInput [(ngModel)]="city" placeholder="Enter city name..." (keyup.enter)="search()" />
+      </mat-form-field>
+      <!-- <button mat-raised-button color="primary" (click)="search()">Search</button> -->
+    </div>
 
-      <!-- Error -->
-      <div *ngIf="error" class="error">
-        <mat-icon>error</mat-icon> {{ error }}
-      </div>
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
 
-      <!-- Weather Result -->
-      <div *ngIf="data" class="result">
-        <mat-card class="result-card">
+    <!-- Error -->
+    <div *ngIf="error" class="error">
+      <mat-icon>error</mat-icon> {{ error }}
+    </div>
+
+    <!-- Forecast -->
+    <div *ngIf="todayData.length > 0" class="result">
+      <mat-card class="result-card">
+        <mat-card-header>
+          <mat-card-subtitle>Today’s Forecast</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="forecast-grid">
+            <div class="forecast-slot" *ngFor="let slot of todayData">
+              <p class="time">{{ slot.dt_txt | date:'HH:mm' }}</p>
+              <p class="icon">{{ getWeatherEmoji(slot.weather[0].main) }}</p>
+              <p class="temp">{{ slot.main.temp | number:'1.0-1' }} °C</p>
+              <p class="feels">Feels: {{ slot.main.feels_like | number:'1.0-1' }} °C</p>
+              <p class="humidity">Humidity: {{ slot.main.humidity }}%</p>
+              <p class="wind">Wind: {{ slot.wind.speed | number:'1.1-1' }} m/s</p>
+            </div>
+          </div>
+
+          <!-- Show Tomorrow button -->
+          <button *ngIf="showTomorrowButton" mat-raised-button color="accent" (click)="loadTomorrowForecast()">
+            Show Tomorrow's Forecast
+          </button>
+        </mat-card-content>
+
+        <div *ngIf="tomorrowVisible && tomorrowData.length > 0">
           <mat-card-header>
-            <mat-card-title>{{ data.name }}</mat-card-title>
-            <mat-card-subtitle>
-                {{ getWeatherEmoji(data.weather[0].main) }} {{ data.weather[0].main }} — {{ getWeatherDescriptionWithEmoji(data.weather[0].main, data.weather[0].description) }}
-            </mat-card-subtitle>
+            <mat-card-subtitle>Tomorrow’s Forecast</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <p><strong>Temp:</strong> {{ data.main?.temp }} °C</p>
-            <p><strong>Feels like:</strong> {{ data.main?.feels_like }} °C</p>
-            <p><strong>Humidity:</strong> {{ data.main?.humidity }}%</p>
-            <p><strong>Wind:</strong> {{ data.wind?.speed }} m/s</p>
+            <div class="forecast-grid">
+              <div class="forecast-slot" *ngFor="let slot of tomorrowData">
+                <p class="time">{{ slot.dt_txt | date:'HH:mm' }}</p>
+                <p class="icon">{{ getWeatherEmoji(slot.weather[0].main) }}</p>
+                <p class="temp">{{ slot.main.temp | number:'1.0-1' }} °C</p>
+                <p class="feels">Feels: {{ slot.main.feels_like | number:'1.0-1' }} °C</p>
+                <p class="humidity">Humidity: {{ slot.main.humidity }}%</p>
+                <p class="wind">Wind: {{ slot.wind.speed | number:'1.1-1' }} m/s</p>
+              </div>
+            </div>
+            <button mat-button color="warn" (click)="hideTomorrowForecast()">Hide Tomorrow Forecast</button>
           </mat-card-content>
-        </mat-card>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+        </div>
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,1 +1,91 @@
-<app-weather-component/>
+<!-- app.component.html -->
+<div class="weather-app-container">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar mat-elevation-z4">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <mat-icon class="weather-icon">cloud</mat-icon>
+                <span class="app-title">Weather Finder</span>
+            </div>
+
+            <div class="nav-actions">
+                <button mat-icon-button class="nav-button" matTooltip="Current Location">
+                    <mat-icon>my_location</mat-icon>
+                </button>
+                <button mat-icon-button class="nav-button" matTooltip="Settings">
+                    <mat-icon>settings</mat-icon>
+                </button>
+                <button mat-icon-button class="nav-button" matTooltip="More">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <app-weather-component></app-weather-component>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Weather Finder</h4>
+                <p>Your reliable weather companion</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" mat-button>Current Weather</a></li>
+                    <li><a href="#" mat-button>7-Day Forecast</a></li>
+                    <li><a href="#" mat-button>Weather Maps</a></li>
+                    <li><a href="#" mat-button>Weather Alerts</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#" mat-button>Weather API</a></li>
+                    <li><a href="#" mat-button>Help Center</a></li>
+                    <li><a href="#" mat-button>About Us</a></li>
+                    <li><a href="#" mat-button>Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                        <i class="fab fa-facebook-square"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Reddy2315/weather-finder" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-container">
+                <p>&copy; 2025 Weather Finder. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#" mat-button>Privacy Policy</a>
+                    <a href="#" mat-button>Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>

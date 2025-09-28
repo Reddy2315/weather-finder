@@ -1,26 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
-export interface WeatherResponse {
-  name: string;
-  main?: { temp: number; humidity: number; feels_like: number };
+export interface ForecastSlot {
+  dt_txt: string;
+  main: { temp: number; feels_like: number; humidity: number };
   weather: { main: string; description: string }[];
-  wind?: { speed: number };
+  wind: { speed: number };
 }
 
+export interface WeatherResponse {
+  city: string;
+  forecast: ForecastSlot[];
+}
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
-  private baseUrl = 'http://localhost:8080/api';
+  private baseUrl = 'http://localhost:8080/api/weather';
 
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-
-  getWeather(city: string): Observable<WeatherResponse> {
-    return this.http.get<WeatherResponse>(`${this.baseUrl}/weather?city=${encodeURIComponent(city)}`);
+  getTodayWeather(city: string): Observable<WeatherResponse> {
+    return this.http.get<WeatherResponse>(`${this.baseUrl}/today?city=${encodeURIComponent(city)}`);
   }
+
+  getTomorrowWeather(city: string): Observable<WeatherResponse> {
+    return this.http.get<WeatherResponse>(`${this.baseUrl}/tomorrow?city=${encodeURIComponent(city)}`);
+  }
+
+  // getWeather(city: string): Observable<WeatherResponse> {
+  //   return this.http.get<WeatherResponse>(`${this.baseUrl}/today?city=${encodeURIComponent(city)}`);
+  // }
+
+  // getTomorrowWeather(city: string): Observable<any[]> {
+  //   return this.http.get<any[]>(`${this.baseUrl}/tomorrow?city=${encodeURIComponent(city)}`);
+  // }
 
   // getCitySuggestions(query: string): Observable<string[]> {
   //   if (query.length < 3) {
