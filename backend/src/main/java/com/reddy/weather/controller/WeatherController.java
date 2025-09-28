@@ -1,9 +1,8 @@
 package com.reddy.weather.controller;
 
-import com.reddy.weather.dto.OpenWeatherResponse;
+import com.reddy.weather.dto.ForecastResponse;
 import com.reddy.weather.service.WeatherService;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +16,7 @@ import reactor.core.publisher.Mono;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @Validated
-@RequestMapping("/api")
+@RequestMapping("/api/weather")
 public class WeatherController {
 
     private final WeatherService weatherService;
@@ -26,11 +25,18 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-    @GetMapping(value = "/weather", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<ResponseEntity<OpenWeatherResponse>> getWeather(@RequestParam @NotBlank String city) {
-        return weatherService.getWeatherByCity(city)
+    @GetMapping("/today")
+    public Mono<ResponseEntity<ForecastResponse>> getTodayForecast(@RequestParam @NotBlank String city) {
+        return weatherService.getTodayForecast(city)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.badRequest().build()));
+    }
+
+    @GetMapping("/tomorrow")
+    public Mono<ResponseEntity<ForecastResponse>> getTomorrowForecast(@RequestParam String city) {
+        return weatherService.getTomorrowForecast(city)
+                .map(ResponseEntity::ok)
+                .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().build()));
     }
 
 }
